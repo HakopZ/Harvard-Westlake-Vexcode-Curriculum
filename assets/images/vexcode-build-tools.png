@@ -1,0 +1,9 @@
+PLACEHOLDER IMAGE: VexCode Build Tools
+This image should show:
+- Top toolbar with Build button (hammer icon)
+- Download button (arrow down icon)
+- Console/output area at bottom showing:
+  - Build progress messages
+  - Compilation errors (if any)
+  - Success message when build completes
+- All buttons and console should be circled and labeled

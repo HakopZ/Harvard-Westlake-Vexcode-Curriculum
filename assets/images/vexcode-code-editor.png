@@ -1,0 +1,8 @@
+PLACEHOLDER IMAGE: VexCode Code Editor
+This image should show:
+- Code editor with C++ code visible
+- Syntax highlighting (keywords in blue, strings in green, etc.)
+- Line numbers on the left
+- Error highlighting (red squiggly lines under errors)
+- Auto-completion dropdown visible
+- Cursor positioned in the code

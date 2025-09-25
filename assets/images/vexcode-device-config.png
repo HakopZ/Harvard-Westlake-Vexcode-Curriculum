@@ -1,0 +1,11 @@
+PLACEHOLDER IMAGE: VexCode Device Configuration
+This image should show:
+- Device configuration panel (left sidebar)
+- Motor configuration section with:
+  - Port selection dropdowns
+  - Gear ratio options (18:1, 36:1, 6:1)
+  - Reversed checkbox
+  - Motor naming field
+- Sensor configuration section
+- Controller configuration section
+- All sections should be circled and labeled

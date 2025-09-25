@@ -1,0 +1,56 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f5f5f5" stroke="#ddd" stroke-width="2"/>
+  
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold">VexCode IDE Overview</text>
+  
+  <!-- Device Configuration Panel (Left) -->
+  <rect x="20" y="60" width="180" height="500" fill="#e8f4fd" stroke="#4a90e2" stroke-width="2"/>
+  <text x="110" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Device Configuration</text>
+  <text x="30" y="110" font-family="Arial, sans-serif" font-size="12">• Motor Setup</text>
+  <text x="30" y="130" font-family="Arial, sans-serif" font-size="12">• Sensor Config</text>
+  <text x="30" y="150" font-family="Arial, sans-serif" font-size="12">• Controller Setup</text>
+  <circle cx="200" cy="100" r="8" fill="none" stroke="#ff0000" stroke-width="2"/>
+  <text x="210" y="105" font-family="Arial, sans-serif" font-size="12" fill="#ff0000">1</text>
+  
+  <!-- Code Editor (Center) -->
+  <rect x="220" y="60" width="400" height="400" fill="#ffffff" stroke="#4a90e2" stroke-width="2"/>
+  <text x="420" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Code Editor</text>
+  <text x="230" y="110" font-family="monospace" font-size="11" fill="#0066cc">#include "vex.h"</text>
+  <text x="230" y="130" font-family="monospace" font-size="11" fill="#0066cc">using namespace vex;</text>
+  <text x="230" y="150" font-family="monospace" font-size="11" fill="#000000">motor leftMotor = motor(PORT1);</text>
+  <text x="230" y="170" font-family="monospace" font-size="11" fill="#000000">int main() {</text>
+  <text x="250" y="190" font-family="monospace" font-size="11" fill="#000000">leftMotor.spin(forward, 50);</text>
+  <text x="250" y="210" font-family="monospace" font-size="11" fill="#000000">wait(2, seconds);</text>
+  <text x="230" y="230" font-family="monospace" font-size="11" fill="#000000">}</text>
+  <circle cx="620" cy="100" r="8" fill="none" stroke="#ff0000" stroke-width="2"/>
+  <text x="630" y="105" font-family="Arial, sans-serif" font-size="12" fill="#ff0000">2</text>
+  
+  <!-- Build Tools (Top Right) -->
+  <rect x="640" y="60" width="140" height="80" fill="#e8f5e8" stroke="#4a90e2" stroke-width="2"/>
+  <text x="710" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Build Tools</text>
+  <rect x="650" y="95" width="60" height="25" fill="#4a90e2" stroke="#4a90e2"/>
+  <text x="680" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Build</text>
+  <rect x="720" y="95" width="50" height="25" fill="#4a90e2" stroke="#4a90e2"/>
+  <text x="745" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Download</text>
+  <circle cx="780" cy="100" r="8" fill="none" stroke="#ff0000" stroke-width="2"/>
+  <text x="790" y="105" font-family="Arial, sans-serif" font-size="12" fill="#ff0000">3</text>
+  
+  <!-- Console (Bottom) -->
+  <rect x="220" y="480" width="400" height="80" fill="#2d2d2d" stroke="#4a90e2" stroke-width="2"/>
+  <text x="420" y="505" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Console</text>
+  <text x="230" y="525" font-family="monospace" font-size="11" fill="#00ff00">Building project...</text>
+  <text x="230" y="545" font-family="monospace" font-size="11" fill="#00ff00">Build successful!</text>
+  <circle cx="620" cy="520" r="8" fill="none" stroke="#ff0000" stroke-width="2"/>
+  <text x="630" y="525" font-family="Arial, sans-serif" font-size="12" fill="#ff0000">4</text>
+  
+  <!-- Help Panel (Right) -->
+  <rect x="640" y="160" width="140" height="400" fill="#fff8e1" stroke="#4a90e2" stroke-width="2"/>
+  <text x="710" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Help & Docs</text>
+  <text x="650" y="210" font-family="Arial, sans-serif" font-size="12">• API Reference</text>
+  <text x="650" y="230" font-family="Arial, sans-serif" font-size="12">• Code Examples</text>
+  <text x="650" y="250" font-family="Arial, sans-serif" font-size="12">• Troubleshooting</text>
+  <circle cx="780" cy="200" r="8" fill="none" stroke="#ff0000" stroke-width="2"/>
+  <text x="790" y="205" font-family="Arial, sans-serif" font-size="12" fill="#ff0000">5</text>
+</svg>

@@ -1,0 +1,47 @@
+<svg width="500" height="300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="500" height="300" fill="#f5f5f5" stroke="#ddd" stroke-width="2"/>
+  
+  <!-- Title -->
+  <text x="250" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Build and Download Tools</text>
+  
+  <!-- Toolbar -->
+  <rect x="20" y="50" width="460" height="50" fill="#e8f4fd" stroke="#4a90e2" stroke-width="2"/>
+  <text x="40" y="75" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Toolbar</text>
+  
+  <!-- Build Button -->
+  <rect x="200" y="60" width="80" height="30" fill="#4a90e2" stroke="#4a90e2" rx="5"/>
+  <text x="240" y="78" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">🔨 Build</text>
+  <circle cx="290" cy="75" r="8" fill="none" stroke="#ff0000" stroke-width="2"/>
+  <text x="300" y="80" font-family="Arial, sans-serif" font-size="12" fill="#ff0000">1</text>
+  
+  <!-- Download Button -->
+  <rect x="320" y="60" width="80" height="30" fill="#4a90e2" stroke="#4a90e2" rx="5"/>
+  <text x="360" y="78" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">⬇ Download</text>
+  <circle cx="410" cy="75" r="8" fill="none" stroke="#ff0000" stroke-width="2"/>
+  <text x="420" y="80" font-family="Arial, sans-serif" font-size="12" fill="#ff0000">2</text>
+  
+  <!-- Console Area -->
+  <rect x="20" y="120" width="460" height="160" fill="#2d2d2d" stroke="#4a90e2" stroke-width="2"/>
+  <text x="40" y="145" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Console Output</text>
+  
+  <!-- Console Messages -->
+  <text x="30" y="170" font-family="monospace" font-size="11" fill="#00ff00">> Building project...</text>
+  <text x="30" y="190" font-family="monospace" font-size="11" fill="#00ff00">> Compiling main.cpp</text>
+  <text x="30" y="210" font-family="monospace" font-size="11" fill="#00ff00">> Linking objects...</text>
+  <text x="30" y="230" font-family="monospace" font-size="11" fill="#00ff00">> Build successful!</text>
+  <text x="30" y="250" font-family="monospace" font-size="11" fill="#00ff00">> Ready to download</text>
+  
+  <!-- Error Example -->
+  <text x="30" y="270" font-family="monospace" font-size="11" fill="#ff6b6b">> Error: 'motor' was not declared</text>
+  
+  <!-- Status Indicators -->
+  <circle cx="450" cy="140" r="8" fill="#00ff00"/>
+  <text x="460" y="145" font-family="Arial, sans-serif" font-size="10" fill="#00ff00">Ready</text>
+  
+  <!-- Labels -->
+  <text x="20" y="295" font-family="Arial, sans-serif" font-size="12" fill="#666">Features:</text>
+  <text x="20" y="310" font-family="Arial, sans-serif" font-size="10" fill="#666">• Real-time compilation</text>
+  <text x="150" y="310" font-family="Arial, sans-serif" font-size="10" fill="#666">• Error reporting</text>
+  <text x="280" y="310" font-family="Arial, sans-serif" font-size="10" fill="#666">• Direct upload to V5 Brain</text>
+</svg>

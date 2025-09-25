@@ -1,0 +1,501 @@
+---
+---
+
+@use "sass:color";
+
+// Harvard‑Westlake palette
+$hw-red: #c8102e;
+$hw-black: #000000;
+$hw-gray-50: #fafafa;
+$hw-gray-100: #f5f7fa;
+$hw-gray-200: #eef2f7;
+$hw-gray-300: #e5e7eb;
+$hw-gray-700: #374151;
+
+// CSS Custom Properties for Theme Support
+:root {
+  // Light theme (default)
+  --bg-color: #ffffff;
+  --text-color: #111111;
+  --text-muted: #666666;
+  --border-color: #{$hw-gray-300};
+  --sidebar-border-color: #{$hw-gray-300};
+  --nav-hover-bg: #{$hw-gray-100};
+  --details-bg: #{$hw-gray-50};
+  --site-title-color: #c8102e;
+  --sidebar-title-color: #{$hw-gray-700};
+  --summary-color: #{$hw-black};
+  --h2-border-color: #{$hw-gray-300};
+  --code-bg: #f8f9fa;
+  --code-text: #333333;
+  --table-header-bg: #{$hw-gray-50};
+  --table-border: #{$hw-gray-300};
+  --link-color: #{$hw-red};
+  --link-hover-color: #{color.adjust($hw-red, $lightness: -10%)};
+  --button-bg: #{$hw-red};
+  --button-text: #ffffff;
+  --button-hover-bg: #{color.adjust($hw-red, $lightness: -10%)};
+  --input-bg: #ffffff;
+  --input-border: #{$hw-gray-300};
+  --input-text: #111111;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --shadow-hover: rgba(0, 0, 0, 0.15);
+  --card-bg: #ffffff;
+  --card-border: #{$hw-gray-300};
+  --menu-bg: #ffffff;
+  --menu-border: #{$hw-gray-300};
+  --footer-bg: #{$hw-gray-50};
+  --footer-text: #{$hw-gray-700};
+  --footer-border: #{$hw-gray-300};
+}
+
+[data-theme="dark"] {
+  // Dark theme
+  --bg-color: #1a1a1a;
+  --text-color: #e5e5e5;
+  --text-muted: #a0a0a0;
+  --border-color: #404040;
+  --sidebar-border-color: #404040;
+  --nav-hover-bg: #2a2a2a;
+  --details-bg: #2a2a2a;
+  --site-title-color: #c8102e;
+  --sidebar-title-color: #b0b0b0;
+  --summary-color: #ffffff;
+  --h2-border-color: #404040;
+  --code-bg: #2a2a2a;
+  --code-text: #e5e5e5;
+  --table-header-bg: #2a2a2a;
+  --table-border: #404040;
+  --link-color: #ff6b6b;
+  --link-hover-color: #ff5252;
+  --button-bg: #{$hw-red};
+  --button-text: #ffffff;
+  --button-hover-bg: #{color.adjust($hw-red, $lightness: 10%)};
+  --input-bg: #2a2a2a;
+  --input-border: #404040;
+  --input-text: #e5e5e5;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-hover: rgba(0, 0, 0, 0.4);
+  --card-bg: #2a2a2a;
+  --card-border: #404040;
+  --menu-bg: #2a2a2a;
+  --menu-border: #404040;
+  --footer-bg: #1a1a1a;
+  --footer-text: #a0a0a0;
+  --footer-border: #404040;
+}
+
+// Minima variables overrides
+$brand-color: $hw-red;
+$link-base-color: $hw-red;
+$text-color: #111111; // Fallback for Sass functions
+$background-color: #ffffff; // Fallback for Sass functions
+$border-color: $hw-gray-300; // Fallback for Sass functions
+$site-title-color: #c8102e; // Fallback for Sass functions
+
+@import "minima";
+
+// Override Minima's hardcoded colors with CSS variables
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+// Ensure all containers respect viewport width
+.wrapper {
+  max-width: 100%;
+  overflow: visible; /* Allow sticky to work properly */
+}
+
+.page-content {
+  max-width: 100%;
+  overflow: visible; /* Allow sticky to work properly */
+  word-wrap: break-word;
+}
+
+// Theme transition class for smooth animations
+.theme-transition * {
+  transition: background-color 0.3s ease, 
+              color 0.3s ease, 
+              border-color 0.3s ease,
+              box-shadow 0.3s ease !important;
+}
+
+.site-header {
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px var(--shadow);
+  width: 100%;
+}
+
+.site-header .wrapper {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+
+.site-footer {
+  background-color: var(--footer-bg);
+  border-top: 1px solid var(--footer-border);
+  color: var(--footer-text);
+}
+
+// Dark Mode Toggle Button
+.theme-toggle {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: 2px solid var(--border-color);
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px var(--shadow);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  &:hover {
+    background: var(--button-hover-bg);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--shadow-hover);
+    border-color: var(--button-hover-bg);
+  }
+  
+  &:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+  }
+  
+  .theme-icon {
+    font-size: 1.1rem;
+  }
+  
+  .theme-text {
+    font-size: 0.85rem;
+  }
+}
+
+// Subtle modernization with CSS variables
+.site-title { 
+  color: #c8102e !important; /* Harvard-Westlake red - force override */
+  font-weight: 900 !important; 
+  letter-spacing: 0.4px;
+  font-size: 1.8rem !important;
+  text-shadow: 0 3px 6px rgba(200, 16, 46, 0.3);
+  text-decoration: none !important;
+  
+  &:hover {
+    color: #c8102e !important; /* Same red on hover */
+    text-decoration: none !important;
+  }
+  
+  &:visited {
+    color: #c8102e !important;
+    text-decoration: none !important;
+  }
+}
+
+.site-nav .page-link { 
+  padding: 0.3rem 0.6rem; 
+  border-radius: 6px; 
+  color: var(--text-color);
+  
+  &:hover { 
+    background: var(--nav-hover-bg); 
+    color: var(--text-color);
+  }
+}
+
+a { 
+  text-decoration: none; 
+  color: var(--link-color);
+}
+
+a:hover { 
+  color: var(--link-hover-color);
+  text-decoration: underline; 
+}
+
+.btn, .button, .page-content a.button-link {
+  background: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: var(--button-hover-bg);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px var(--shadow);
+  }
+}
+
+.page-content { 
+  line-height: 1.65; 
+  color: var(--text-color);
+}
+
+.page-content h1, 
+.page-content h2, 
+.page-content h3, 
+.page-content h4, 
+.page-content h5, 
+.page-content h6 {
+  color: var(--text-color);
+}
+
+.page-content h2 { 
+  border-bottom: 2px solid var(--h2-border-color); 
+  padding-bottom: 0.25rem; 
+  margin-top: 2rem; 
+}
+
+// Code blocks
+pre, code {
+  background-color: var(--code-bg) !important;
+  color: var(--code-text) !important;
+  border: 1px solid var(--border-color);
+  max-width: 100%;
+  overflow-x: auto;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+// Ensure code blocks don't cause horizontal scroll
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+// Inline code should wrap
+code:not(pre code) {
+  white-space: normal;
+  word-break: break-word;
+}
+
+// Tables
+table {
+  background-color: var(--card-bg);
+  border: 1px solid var(--table-border);
+  
+  th {
+    background-color: var(--table-header-bg);
+    color: var(--text-color);
+    border-bottom: 1px solid var(--table-border);
+  }
+  
+  td {
+    border-bottom: 1px solid var(--table-border);
+    color: var(--text-color);
+  }
+}
+
+// Form elements
+input, textarea, select {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+  
+  &:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+  }
+}
+
+// Sidebar layout
+.layout--sidebar { 
+  display: grid; 
+  grid-template-columns: 250px 1fr; 
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0 1rem;
+  max-width: 100%;
+  overflow: visible; /* Allow sticky to work properly */
+}
+
+.sidebar { 
+  position: sticky; 
+  top: 1.5rem; 
+  align-self: start; 
+  border-right: 1px solid var(--sidebar-border-color); 
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px var(--shadow);
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  z-index: 100;
+  height: fit-content;
+  will-change: transform;
+}
+
+.sidebar-inner { 
+  padding-right: 0; 
+}
+
+.sidebar-title { 
+  font-size: 0.95rem; 
+  text-transform: uppercase; 
+  color: var(--sidebar-title-color); 
+  letter-spacing: 0.08em; 
+  margin-bottom: 0.5rem; 
+}
+
+.sidebar-nav ul { 
+  list-style: none; 
+  padding: 0; 
+  margin: 0; 
+}
+
+.sidebar-nav li { 
+  margin: 0.2rem 0; 
+}
+
+.sidebar-nav a { 
+  color: var(--text-color); 
+  padding: 0.25rem 0.5rem; 
+  border-radius: 6px; 
+  display: block; 
+  transition: all 0.3s ease;
+}
+
+.sidebar-nav a:hover { 
+  background: var(--nav-hover-bg); 
+  color: var(--text-color);
+  transform: translateX(4px);
+}
+
+.sidebar-nav a.active {
+  background: var(--link-color);
+  color: #ffffff;
+  font-weight: 600;
+  transform: translateX(4px);
+  box-shadow: 0 2px 4px var(--shadow);
+}
+
+.sidebar-content {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+// Collapsible sections
+details { 
+  border: 1px solid var(--border-color); 
+  border-radius: 8px; 
+  background: var(--details-bg); 
+  padding: 0.75rem 0.9rem; 
+  margin: 1rem 0; 
+  transition: all 0.3s ease;
+}
+
+summary { 
+  cursor: pointer; 
+  font-weight: 600; 
+  color: var(--summary-color); 
+  transition: color 0.3s ease;
+}
+
+summary::marker { 
+  color: var(--link-color); 
+}
+
+details[open] { 
+  border-color: var(--link-color); 
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+// Collapsible example answers
+.example-answer {
+  margin: 1rem 0;
+  
+  .example-toggle {
+    background: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    &:hover {
+      background: var(--button-hover-bg);
+      transform: translateY(-1px);
+    }
+    
+    &:focus {
+      outline: 2px solid var(--link-color);
+      outline-offset: 2px;
+    }
+    
+    .toggle-icon {
+      transition: transform 0.3s ease;
+    }
+    
+    &.expanded .toggle-icon {
+      transform: rotate(90deg);
+    }
+  }
+  
+  .example-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: var(--details-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    margin-top: 0.5rem;
+    
+    &.expanded {
+      max-height: 1000px;
+      padding: 1rem;
+    }
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .layout--sidebar {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .sidebar {
+    position: static;
+    order: 2;
+  }
+  
+  .theme-toggle {
+    bottom: 0.5rem;
+    right: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    
+    .theme-text {
+      display: none;
+    }
+  }
+} 
