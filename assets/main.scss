@@ -1,8 +1,6 @@
 ---
 ---
 
-@use "sass:color";
-
 // Harvard‑Westlake palette
 $hw-red: #c8102e;
 $hw-black: #000000;
@@ -93,6 +91,10 @@ $background-color: #ffffff; // Fallback for Sass functions
 $border-color: $hw-gray-300; // Fallback for Sass functions
 $site-title-color: #c8102e; // Fallback for Sass functions
 
+// Additional color variables for better compatibility
+$hw-red-hover: #b00e2a;
+$hw-red-light: #e01a3a;
+
 @import "minima";
 
 // Override Minima's hardcoded colors with CSS variables
@@ -101,7 +103,9 @@ html, body {
 }
 
 body {
+  background-color: #ffffff; // Fallback for older browsers
   background-color: var(--bg-color);
+  color: #111111; // Fallback for older browsers
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
   margin: 0;
@@ -131,8 +135,11 @@ body {
 }
 
 .site-header {
+  background-color: #ffffff; // Fallback
   background-color: var(--bg-color);
+  border-bottom: 1px solid #e5e7eb; // Fallback
   border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Fallback
   box-shadow: 0 2px 4px var(--shadow);
   width: 100%;
 }
@@ -210,29 +217,56 @@ body {
   }
 }
 
+// Force override Minima's default colors for better compatibility
+.site-header {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.site-nav .page-link {
+  color: #111111 !important;
+  
+  &:hover {
+    color: #111111 !important;
+  }
+}
+
+// Ensure links use the correct colors
+.page-content a {
+  color: #c8102e !important;
+  
+  &:hover {
+    color: #b00e2a !important;
+  }
+  
+  &:visited {
+    color: #c8102e !important;
+  }
+}
+
 .site-nav .page-link { 
   padding: 0.3rem 0.6rem; 
   border-radius: 6px; 
-  color: var(--text-color);
+  color: #111111 !important;
   
   &:hover { 
-    background: var(--nav-hover-bg); 
-    color: var(--text-color);
+    background: #f5f7fa; 
+    color: #111111 !important;
   }
 }
 
 a { 
   text-decoration: none; 
-  color: var(--link-color);
+  color: #c8102e !important;
 }
 
 a:hover { 
-  color: var(--link-hover-color);
+  color: #b00e2a !important;
   text-decoration: underline; 
 }
 
 a:visited {
-  color: var(--link-color);
+  color: #c8102e !important;
 }
 
 .btn, .button, .page-content a.button-link {
