@@ -7,7 +7,7 @@ Welcome to the comprehensive programming curriculum for VEX Robotics! This site 
 
 ## 📖 Curriculum Overview
 
-### [Computer Science Overview](/curriculum/cs-overview/)
+### [Computer Science Overview]({{ '/curriculum/cs-overview/' | relative_url }})
 **What you'll learn:** Essential programming fundamentals for robotics
 **After completing this section, you will be able to:**
 - Write clean, well-documented C++ code
@@ -18,7 +18,7 @@ Welcome to the comprehensive programming curriculum for VEX Robotics! This site 
 
 This section covers everything from basic syntax to advanced programming patterns, including data types, control flow, functions, classes, and development tools.
 
-### [VEXcode Introduction](/curriculum/vexcode-introduction/)
+### [VEXcode Introduction]({{ '/curriculum/vexcode-introduction/' | relative_url }})
 **What you'll learn:** VEX programming environment and basic robot control
 **After completing this section, you will be able to:**
 - Navigate the VEXcode IDE confidently
@@ -29,7 +29,7 @@ This section covers everything from basic syntax to advanced programming pattern
 
 Get started with the VEXcode IDE and learn the fundamentals of the VEX programming environment, including hardware setup, project structure, and basic programming concepts.
 
-### [Advanced Robotics Programming](/curriculum/advanced-robotics-programming/)
+### [Advanced Robotics Programming]({{ '/curriculum/advanced-robotics-programming/' | relative_url }})
 **What you'll learn:** Sophisticated control systems and advanced robotics techniques
 **After completing this section, you will be able to:**
 - Implement sophisticated autonomous behaviors
