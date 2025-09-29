@@ -6,14 +6,16 @@ permalink: /curriculum/vexcode-introduction/
 
 ## What is VexCode?
 
-VexCode is the official programming environment for VEX Robotics competitions. It's an Integrated Development Environment (IDE) that lets you write, compile, and upload C++ code to your VEX V5 Brain for competitive robotics.
+VexCode is the official programming environment for VEX Robotics competitions. While VexCode traditionally refers to the standalone IDE, we'll be using the **VexCode extension for Visual Studio Code**, which provides a more professional development experience with better code management and team collaboration.
 
-> **Key Features for Competition:**
-> - Built-in C++ compiler (LLVM/Clang-based)
-> - Real-time error checking
-> - Device configuration tools
-> - Built-in documentation
+> **Key Features of VexCode VS Code Extension:**
+> - Full C++ development environment in VS Code
+> - Built-in VEX API support and autocomplete
+> - Real-time error checking and syntax highlighting
+> - Code-based device configuration (no visual tools needed)
+> - Built-in documentation and IntelliSense
 > - Direct upload to V5 Brain
+> - Git integration for team collaboration
 > - Competition-ready program structure
 
 ## Competition Program Structure
@@ -48,64 +50,72 @@ int main() {
 
 This structure is essential for VEX competitions - it automatically switches between autonomous and driver control based on the match timing.
 
-## VexCode IDE Components
+## Setting Up VexCode in VS Code
 
-![VexCode IDE Overview]({{ '/assets/images/vexcode-ide-overview.svg' | relative_url }})
-*Figure 1: VexCode IDE with main components labeled*
+### Step 1: Install Visual Studio Code
+1. Download and install [Visual Studio Code](https://code.visualstudio.com/)
+2. Open VS Code and go to the Extensions view (Ctrl+Shift+X)
+3. Search for "VexCode" and install the official VexCode extension
+4. Restart VS Code after installation
 
-**Code Editor** - The main area where you write your C++ code. Features include:
-- **Syntax highlighting**: Code is color-coded for better readability
-- **Auto-completion**: Suggests function names and parameters
-- **Error highlighting**: Shows syntax errors in real-time
-- **Line numbers**: Helps with debugging and navigation
+### Step 2: Create Your First VexCode Project
+1. Open VS Code
+2. Go to File → New Folder and create a new project folder
+3. Open the Command Palette (Ctrl+Shift+P)
+4. Type "VexCode: New Project" and select it
+5. Choose "V5 Brain" as your device
+6. Select "C++" as your language
+7. Give your project a descriptive name
 
-![Code Editor]({{ '/assets/images/vexcode-code-editor.svg' | relative_url }})
-*Figure 2: Code editor with syntax highlighting and line numbers*
+### Step 3: Understanding the Project Structure
+After creating a new project, you'll see this directory structure:
 
-**Device Configuration** - Located in the left sidebar, this tool helps you:
-- **Configure motors**: Set motor ports, gear ratios, and directions
-- **Setup sensors**: Configure encoders, gyros, and other sensors
-- **Name devices**: Give meaningful names to your hardware
-- **Set up controllers**: Configure V5 Controller buttons and joysticks
-
-![Device Configuration]({{ '/assets/images/vexcode-device-config.svg' | relative_url }})
-*Figure 3: Device configuration panel showing motor and sensor setup*
-
-**Build and Run Tools** - Essential for compiling and uploading your code:
-- **Build button**: Compiles your code and checks for errors
-- **Download button**: Uploads compiled code to the V5 Brain
-- **Console**: Shows build messages, errors, and debug output
-
-![Build Tools]({{ '/assets/images/vexcode-build-tools.svg' | relative_url }})
-*Figure 4: Build and download buttons with console output*
-
-**Help and Documentation** - Your reference guide:
-- **Built-in help**: Access VEX API documentation
-- **Code examples**: Sample programs for common tasks
-- **Troubleshooting guides**: Solutions to common problems
-
-![Help Documentation]({{ '/assets/images/vexcode-help.svg' | relative_url }})
-*Figure 5: Built-in help system with API documentation*
-
-## Setting Up Your First Project
-
-### Step 1: Create a New Project
-1. Open VexCode
-2. Click "New Project"
-3. Choose "V5 Brain" as your device
-4. Select "C++" as your language
-5. Give your project a descriptive name
-
-### Step 2: Configure Your Robot
-Before writing code, you need to tell VexCode about your robot's hardware:
-
-#### Motor Configuration
-```cpp
-// Example: Configure a drive motor
-vex::motor leftMotor = vex::motor(vex::PORT1, vex::gearSetting::ratio18_1, false);
+```
+MyRobotProject/
+├── src/
+│   ├── main.cpp              // Main program file
+│   ├── robot-config.cpp      // Hardware configuration
+│   └── robot-config.h        // Hardware declarations
+├── include/
+│   └── vex.h                 // VEX API header
+├── .vscode/
+│   └── settings.json         // VS Code project settings
+└── README.md                 // Project documentation
 ```
 
-**Configuration Options:**
+**Key Files:**
+- **`main.cpp`**: Your main program with autonomous and user control functions
+- **`robot-config.cpp`**: All motor and sensor configurations in code
+- **`robot-config.h`**: Header file with device declarations
+- **`vex.h`**: VEX API library (automatically included)
+
+## Code-Based Hardware Configuration
+
+Unlike the visual VexCode IDE, the VS Code extension requires you to configure all hardware through code. This approach gives you more control and makes your configuration part of your source code.
+
+### Motor Configuration in Code
+All motors are configured in the `robot-config.cpp` file:
+
+```cpp
+// robot-config.cpp
+#include "vex.h"
+
+using namespace vex;
+
+// Drive train motors
+motor leftFront = motor(PORT1, ratio18_1, false);   // Port 1, Red gear, not reversed
+motor leftBack = motor(PORT2, ratio18_1, false);    // Port 2, Red gear, not reversed
+motor rightFront = motor(PORT3, ratio18_1, true);   // Port 3, Red gear, reversed
+motor rightBack = motor(PORT4, ratio18_1, true);    // Port 4, Red gear, reversed
+
+// Intake motor
+motor intakeMotor = motor(PORT5, ratio36_1, false); // Port 5, Green gear, not reversed
+
+// Lift motor
+motor liftMotor = motor(PORT6, ratio6_1, false);    // Port 6, Blue gear, not reversed
+```
+
+**Configuration Parameters:**
 - **Port**: Which port on the V5 Brain (1-21)
 - **Gear Setting**: 
   - `ratio18_1` - Red gear (fast, less torque)
@@ -113,41 +123,94 @@ vex::motor leftMotor = vex::motor(vex::PORT1, vex::gearSetting::ratio18_1, false
   - `ratio6_1` - Blue gear (slow, high torque)
 - **Reversed**: `true` if motor should spin opposite direction
 
-#### Sensor Configuration
-```cpp
-// Example: Configure an encoder
-vex::encoder leftEncoder = vex::encoder(vex::PORT2, vex::PORT3, false);
+### Sensor Configuration in Code
+Sensors are also configured in the `robot-config.cpp` file:
 
-// Example: Configure a gyro
-vex::gyro gyroSensor = vex::gyro(vex::PORT4);
+```cpp
+// Encoders for tracking distance
+encoder leftEncoder = encoder(PORT7, PORT8, false);  // Ports 7&8, not reversed
+encoder rightEncoder = encoder(PORT9, PORT10, true); // Ports 9&10, reversed
+
+// Gyro for turning
+gyro gyroSensor = gyro(PORT11);
+
+// Distance sensor
+distance distanceSensor = distance(PORT12);
+
+// Color sensor
+optical colorSensor = optical(PORT13);
+
+// Controller
+controller Controller1 = controller(primary);
 ```
 
-### Step 3: Competition Program Structure
-Every competition VexCode program follows this structure:
+### Header File Declarations
+The `robot-config.h` file contains all the declarations:
 
 ```cpp
+// robot-config.h
+#ifndef ROBOT_CONFIG_H
+#define ROBOT_CONFIG_H
+
 #include "vex.h"
 
-using namespace vex;
+// Motor declarations
+extern motor leftFront;
+extern motor leftBack;
+extern motor rightFront;
+extern motor rightBack;
+extern motor intakeMotor;
+extern motor liftMotor;
 
-// Declare your devices here
-motor leftMotor = motor(PORT1, ratio18_1, false);
-motor rightMotor = motor(PORT2, ratio18_1, true);
+// Sensor declarations
+extern encoder leftEncoder;
+extern encoder rightEncoder;
+extern gyro gyroSensor;
+extern distance distanceSensor;
+extern optical colorSensor;
+
+// Controller declaration
+extern controller Controller1;
+
+#endif
+```
+
+## Main Program Structure
+
+Your main program in `main.cpp` follows this structure:
+
+```cpp
+// main.cpp
+#include "vex.h"
+#include "robot-config.h"
+
+using namespace vex;
 
 // Pre-autonomous setup function
 void pre_auton() {
     // Initialize sensors, reset encoders, etc.
     // This runs before autonomous starts
+    gyroSensor.calibrate();
+    wait(2, seconds);
+    
+    leftEncoder.resetPosition();
+    rightEncoder.resetPosition();
 }
 
 // Autonomous function - runs during 15-second autonomous period
 void autonomous() {
     // Your autonomous routine goes here
-    leftMotor.spin(forward, 50, percent);
-    rightMotor.spin(forward, 50, percent);
+    leftFront.spin(forward, 50, percent);
+    leftBack.spin(forward, 50, percent);
+    rightFront.spin(forward, 50, percent);
+    rightBack.spin(forward, 50, percent);
+    
     wait(2, seconds);
-    leftMotor.stop();
-    rightMotor.stop();
+    
+    leftFront.stop();
+    leftBack.stop();
+    rightFront.stop();
+    rightBack.stop();
 }
 
 // User control function - runs during driver control period
@@ -157,8 +220,19 @@ void usercontrol() {
         int leftSpeed = Controller1.Axis3.position();
         int rightSpeed = Controller1.Axis2.position();
         
-        leftMotor.spin(forward, leftSpeed, percent);
-        rightMotor.spin(forward, rightSpeed, percent);
+        leftFront.spin(forward, leftSpeed, percent);
+        leftBack.spin(forward, leftSpeed, percent);
+        rightFront.spin(forward, rightSpeed, percent);
+        rightBack.spin(forward, rightSpeed, percent);
+        
+        // Intake control
+        if (Controller1.ButtonL1.pressing()) {
+            intakeMotor.spin(forward, 80, percent);
+        } else if (Controller1.ButtonL2.pressing()) {
+            intakeMotor.spin(reverse, 80, percent);
+        } else {
+            intakeMotor.stop();
+        }
         
         wait(20, msec);  // Small delay to prevent overwhelming the brain
     }
@@ -177,128 +251,130 @@ int main() {
 }
 ```
 
-## Common Hardware Setup
+## Building and Uploading Your Code
 
-![Hardware Setup Overview]({{ '/assets/images/vexcode-hardware-setup.svg' | relative_url }})
-*Figure 6: Common VEX hardware components and their connections*
+### Building Your Project
+1. In VS Code, open the Command Palette (Ctrl+Shift+P)
+2. Type "VexCode: Build" and select it
+3. The extension will compile your code and show any errors in the Problems panel
+4. Fix any compilation errors before proceeding
 
-**Drive Train Setup** - Most robots need a drive train. Here's a typical configuration:
+### Uploading to the V5 Brain
+1. Connect your V5 Brain to your computer via USB
+2. Make sure the Brain is powered on
+3. In VS Code, open the Command Palette (Ctrl+Shift+P)
+4. Type "VexCode: Download" and select it
+5. The extension will upload your compiled code to the Brain
 
-```cpp
-// Left side motors
-motor leftFront = motor(PORT1, ratio18_1, false);
-motor leftBack = motor(PORT2, ratio18_1, false);
+### VS Code Features for VexCode Development
 
-// Right side motors  
-motor rightFront = motor(PORT3, ratio18_1, true);
-motor rightBack = motor(PORT4, ratio18_1, true);
+**IntelliSense and Autocomplete:**
+- Type `motor.` and VS Code will show all available motor functions
+- Hover over functions to see documentation
+- Get real-time error checking as you type
 
-// Create motor groups for easier control
-motor_group leftDrive = motor_group(leftFront, leftBack);
-motor_group rightDrive = motor_group(rightFront, rightBack);
-```
+**Integrated Terminal:**
+- Use the built-in terminal for Git commands
+- Run build commands directly from VS Code
+- Access all your development tools in one place
 
-**Controller Setup** - Configure your V5 Controller for robot control:
-![V5 Controller]({{ '/assets/images/vexcode-controller.svg' | relative_url }})
-*Figure 7: V5 Controller with button and joystick labels*
+**Source Control:**
+- Built-in Git integration for team collaboration
+- Track changes to your robot code
+- Share code with teammates easily
 
-```cpp
-// V5 Controller
-controller Controller1 = controller(primary);
+**Extensions:**
+- C/C++ extension for enhanced C++ support
+- GitLens for advanced Git features
+- Bracket Pair Colorizer for better code readability
 
-// Access controller inputs
-void usercontrol() {
-    while (true) {
-        // Get joystick values (-100 to 100)
-        int leftSpeed = Controller1.Axis3.position();
-        int rightSpeed = Controller1.Axis2.position();
-        
-        // Drive the robot
-        leftDrive.spin(forward, leftSpeed, percent);
-        rightDrive.spin(forward, rightSpeed, percent);
-        
-        wait(20, msec); // Small delay to prevent overwhelming the brain
-    }
-}
-```
+## Best Practices for Code-Based Development
 
-**Sensor Setup** - Configure various sensors for your robot:
-```cpp
-// Encoders for tracking distance
-encoder leftEncoder = encoder(PORT5, PORT6, false);
-encoder rightEncoder = encoder(PORT7, PORT8, true);
-
-// Gyro for turning
-gyro gyroSensor = gyro(PORT9);
-
-// Distance sensor
-distance distanceSensor = distance(PORT10);
-
-// Color sensor
-optical colorSensor = optical(PORT11);
-```
-
-## Best Practices
+**File Organization** - Keep your code well-organized:
+- Keep all hardware configuration in `robot-config.cpp`
+- Put function declarations in header files
+- Use meaningful file names and folder structure
+- Comment your code thoroughly
 
 **Naming Conventions** - Use clear, descriptive names:
-- Use descriptive names: `leftDriveMotor` instead of `motor1`
+- Use descriptive names: `leftFrontMotor` instead of `motor1`
 - Be consistent: `leftFront`, `leftBack`, `rightFront`, `rightBack`
 - Use camelCase for variables and functions
+- Use UPPER_CASE for constants
 
-**Port Management** - Keep track of your hardware connections:
-- Keep a list of which devices use which ports
-- Use comments to document your port assignments
-- Leave some ports free for future additions
+**Port Management** - Document your hardware connections:
+```cpp
+// robot-config.cpp
+// Drive Train - Ports 1-4
+motor leftFront = motor(PORT1, ratio18_1, false);   // Left front drive
+motor leftBack = motor(PORT2, ratio18_1, false);    // Left back drive
+motor rightFront = motor(PORT3, ratio18_1, true);   // Right front drive (reversed)
+motor rightBack = motor(PORT4, ratio18_1, true);    // Right back drive (reversed)
+
+// Intake System - Ports 5-6
+motor intakeMotor = motor(PORT5, ratio36_1, false); // Intake motor
+motor liftMotor = motor(PORT6, ratio6_1, false);    // Lift motor
+
+// Sensors - Ports 7-13
+encoder leftEncoder = encoder(PORT7, PORT8, false); // Left encoder
+encoder rightEncoder = encoder(PORT9, PORT10, true); // Right encoder
+gyro gyroSensor = gyro(PORT11);                     // Gyro sensor
+distance distanceSensor = distance(PORT12);         // Distance sensor
+optical colorSensor = optical(PORT13);              // Color sensor
+```
 
 **Code Organization** - Structure your code for clarity:
-```cpp
-// Group related devices together
-// Drive train
-motor leftMotor = motor(PORT1, ratio18_1, false);
-motor rightMotor = motor(PORT2, ratio18_1, true);
-
-// Sensors
-encoder leftEncoder = encoder(PORT3, PORT4, false);
-gyro gyroSensor = gyro(PORT5);
-
-// Controller
-controller Controller1 = controller(primary);
-```
+- Group related devices together with comments
+- Use consistent indentation and formatting
+- Keep functions small and focused
+- Use meaningful variable names
 
 **Testing and Debugging** - Develop systematically:
 - Test each component individually before combining
-- Use the console to print debug information
+- Use `Brain.Screen.print()` for debug information
 - Start with simple movements and build complexity gradually
+- Use version control (Git) to track changes
 
 ## Common Issues and Solutions
 
-**Motor Not Moving** - Troubleshooting steps:
-1. Check port connections
-2. Verify motor configuration (port, gear ratio, direction)
-3. Ensure motor is not in brake mode when it should be coasting
-4. Check if motor is physically blocked
-
 **Code Won't Compile** - Common fixes:
 1. Check for syntax errors (missing semicolons, brackets)
-2. Verify all device names are spelled correctly
-3. Make sure you've included `#include "vex.h"`
-4. Check that all ports are unique
+2. Verify all device names are spelled correctly in `robot-config.cpp`
+3. Make sure you've included `#include "vex.h"` and `#include "robot-config.h"`
+4. Check that all ports are unique (no two devices on same port)
+5. Ensure header file declarations match the implementation
+
+**Motor Not Moving** - Troubleshooting steps:
+1. Check port connections on the V5 Brain
+2. Verify motor configuration in `robot-config.cpp` (port, gear ratio, direction)
+3. Check if motor is physically blocked or disconnected
+4. Verify the motor is being called correctly in your code
+5. Use `Brain.Screen.print()` to debug motor commands
 
 **Robot Behavior is Unexpected** - Debugging approach:
-1. Verify motor directions (some may need to be reversed)
-2. Check sensor readings in the console
+1. Verify motor directions in `robot-config.cpp` (some may need to be reversed)
+2. Check sensor readings using `Brain.Screen.print()`
 3. Ensure your logic matches your robot's physical setup
 4. Test with small movements first
+5. Use the VS Code debugger to step through your code
+
+**VS Code Extension Issues** - Troubleshooting:
+1. Make sure the VexCode extension is properly installed
+2. Restart VS Code if the extension isn't working
+3. Check that your project was created using "VexCode: New Project"
+4. Verify the `.vscode/settings.json` file is present
+5. Use the Command Palette (Ctrl+Shift+P) to access VexCode commands
 
 ## Next Steps
 
-Now that you understand the basics of VexCode:
+Now that you understand the basics of VexCode in VS Code:
 1. **Practice**: Create a simple program that drives forward and backward
 2. **Experiment**: Try different motor speeds and directions
 3. **Add sensors**: Incorporate encoders or gyros into your programs
 4. **Build complexity**: Combine multiple behaviors into autonomous routines
+5. **Use Git**: Start tracking your code changes with version control
 
-> **Assignment**: Create a new VexCode project and write a program that:
+> **Assignment**: Create a new VexCode project in VS Code and write a program that:
 > 1. Drives forward for 3 seconds
 > 2. Turns right for 1 second  
 > 3. Drives backward for 2 seconds
@@ -307,6 +383,7 @@ Now that you understand the basics of VexCode:
 > <details>
 >   <summary>Show example answer</summary>
 >   
+> **robot-config.cpp:**
 > ```cpp
 > #include "vex.h"
 > 
@@ -315,8 +392,16 @@ Now that you understand the basics of VexCode:
 > // Configure motors
 > motor leftMotor = motor(PORT1, ratio18_1, false);
 > motor rightMotor = motor(PORT2, ratio18_1, true);
+> ```
 > 
-> int main() {
+> **main.cpp:**
+> ```cpp
+> #include "vex.h"
+> #include "robot-config.h"
+> 
+> using namespace vex;
+> 
+> void autonomous() {
 >     // Drive forward for 3 seconds
 >     leftMotor.spin(forward, 50, percent);
 >     rightMotor.spin(forward, 50, percent);
@@ -335,8 +420,21 @@ Now that you understand the basics of VexCode:
 >     // Stop
 >     leftMotor.stop();
 >     rightMotor.stop();
+> }
+> 
+> void usercontrol() {
+>     while (true) {
+>         wait(20, msec);
+>     }
+> }
+> 
+> int main() {
+>     Competition.autonomous(autonomous);
+>     Competition.drivercontrol(usercontrol);
 >     
->     return 0;
+>     while (true) {
+>         wait(100, msec);
+>     }
 > }
 > ```
 > 
