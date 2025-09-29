@@ -32,6 +32,12 @@ theme: minima
 plugins:
   - jekyll-feed
 
+# Sass configuration to suppress deprecation warnings
+sass:
+  style: compressed
+  quiet_deps: true
+  silence_deprecations: ["import", "global-builtin", "color-functions"]
+
 # Markdown settings
 markdown: kramdown
 kramdown:
