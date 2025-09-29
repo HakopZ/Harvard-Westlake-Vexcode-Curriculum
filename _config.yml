@@ -29,14 +29,15 @@ github_username:  jekyll
 
 # Build settings
 theme: minima
-plugins:
-  - jekyll-feed
+# plugins are handled by github-pages gem
 
 # Sass configuration to suppress deprecation warnings
 sass:
   style: compressed
   quiet_deps: true
   silence_deprecations: ["import", "global-builtin", "color-functions"]
+  load_paths:
+    - _sass
 
 # Markdown settings
 markdown: kramdown
