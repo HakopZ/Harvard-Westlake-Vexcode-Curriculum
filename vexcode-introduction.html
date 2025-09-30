@@ -8,6 +8,10 @@
   <meta name="description" content="Learn the VEX programming environment and basic robot control. Get started with VEXcode IDE and master the fundamentals of VEX programming.">
   <link rel="stylesheet" href="assets/main.css">
   
+  <!-- Prism.js for syntax highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  
   <!-- Theme toggle script -->
   <script src="assets/theme-toggle.js" defer></script>
   
@@ -87,7 +91,7 @@
 
               <p><strong>Every VEX program starts with <code>int main()</code></strong> - this is where your program begins execution. However, for competition robotics, we use a special structure that separates autonomous and driver control periods.</p>
 
-              <pre><code>#include "vex.h"
+              <pre><code class="language-cpp">#include "vex.h"
 
 using namespace vex;
 
@@ -139,7 +143,7 @@ int main() {
               <h3>Step 3: Understanding the Project Structure</h3>
               <p>After creating a new project, you'll see this directory structure:</p>
 
-              <pre><code>MyRobotProject/
+              <pre><code class="language-cpp">MyRobotProject/
 ├── src/
 │   ├── main.cpp              // Main program file
 │   ├── robot-config.cpp      // Hardware configuration
@@ -165,22 +169,22 @@ int main() {
               <h3>Motor Configuration in Code</h3>
               <p>All motors are configured in the <code>robot-config.cpp</code> file:</p>
 
-              <pre><code>// robot-config.cpp
+              <pre><code class="language-cpp">// robot-config.cpp
 #include "vex.h"
 
 using namespace vex;
 
 // Drive train motors
-motor leftFront = motor(PORT1, ratio18_1, false);   // Port 1, Red gear, not reversed
-motor leftBack = motor(PORT2, ratio18_1, false);    // Port 2, Red gear, not reversed
-motor rightFront = motor(PORT3, ratio18_1, true);   // Port 3, Red gear, reversed
-motor rightBack = motor(PORT4, ratio18_1, true);    // Port 4, Red gear, reversed
+motor leftFront(PORT1, ratio18_1, false);   // Port 1, Red gear, not reversed
+motor leftBack(PORT2, ratio18_1, false);    // Port 2, Red gear, not reversed
+motor rightFront(PORT3, ratio18_1, true);   // Port 3, Red gear, reversed
+motor rightBack(PORT4, ratio18_1, true);    // Port 4, Red gear, reversed
 
 // Intake motor
-motor intakeMotor = motor(PORT5, ratio36_1, false); // Port 5, Green gear, not reversed
+motor intakeMotor(PORT5, ratio36_1, false); // Port 5, Green gear, not reversed
 
 // Lift motor
-motor liftMotor = motor(PORT6, ratio6_1, false);    // Port 6, Blue gear, not reversed</code></pre>
+motor liftMotor(PORT6, ratio6_1, false);    // Port 6, Blue gear, not reversed</code></pre>
 
               <p><strong>Configuration Parameters:</strong></p>
               <ul>
@@ -198,26 +202,26 @@ motor liftMotor = motor(PORT6, ratio6_1, false);    // Port 6, Blue gear, not re
               <h3>Sensor Configuration in Code</h3>
               <p>Sensors are also configured in the <code>robot-config.cpp</code> file:</p>
 
-              <pre><code>// Encoders for tracking distance
-encoder leftEncoder = encoder(PORT7, PORT8, false);  // Ports 7&8, not reversed
-encoder rightEncoder = encoder(PORT9, PORT10, true); // Ports 9&10, reversed
+              <pre><code class="language-cpp">// Encoders for tracking distance
+encoder leftEncoder(PORT7, PORT8, false);  // Ports 7&8, not reversed
+encoder rightEncoder(PORT9, PORT10, true); // Ports 9&10, reversed
 
 // Gyro for turning
-gyro gyroSensor = gyro(PORT11);
+gyro gyroSensor(PORT11);
 
 // Distance sensor
-distance distanceSensor = distance(PORT12);
+distance distanceSensor(PORT12);
 
 // Color sensor
-optical colorSensor = optical(PORT13);
+optical colorSensor(PORT13);
 
 // Controller
-controller Controller1 = controller(primary);</code></pre>
+controller Controller1(primary);</code></pre>
 
               <h3>Header File Declarations</h3>
               <p>The <code>robot-config.h</code> file contains all the declarations:</p>
 
-              <pre><code>// robot-config.h
+              <pre><code class="language-cpp">// robot-config.h
 #ifndef ROBOT_CONFIG_H
 #define ROBOT_CONFIG_H
 
@@ -243,11 +247,362 @@ extern controller Controller1;
 
 #endif</code></pre>
 
+              <h2 id="imu-sensor-setup-and-usage">IMU Sensor Setup and Usage</h2>
+
+              <p>The Inertial Measurement Unit (IMU) is one of the most powerful sensors in VEX robotics. It provides precise orientation data that can be used for accurate turning, balancing, and navigation.</p>
+
+              <h3>IMU Configuration</h3>
+              <p>Add the IMU to your <code>robot-config.cpp</code> file:</p>
+
+              <pre><code class="language-cpp">// robot-config.cpp
+#include "vex.h"
+
+using namespace vex;
+
+// ... other motor and sensor configurations ...
+
+// IMU sensor
+inertial imuSensor(PORT14);  // Port 14</code></pre>
+
+              <p>And declare it in your <code>robot-config.h</code> file:</p>
+
+              <pre><code class="language-cpp">// robot-config.h
+// ... other declarations ...
+
+// IMU declaration
+extern inertial imuSensor;</code></pre>
+
+              <h3>IMU Calibration</h3>
+              <p><strong>IMU calibration is critical and must be done in the <code>pre_auton()</code> function.</strong> The IMU needs time to calibrate before it can provide accurate readings.</p>
+
+              <pre><code class="language-cpp">void pre_auton() {
+    // Initialize sensors, reset encoders, etc.
+    leftEncoder.resetPosition();
+    rightEncoder.resetPosition();
+    
+    // CRITICAL: Calibrate IMU before autonomous starts
+    imuSensor.calibrate();
+    
+    // Wait for calibration to complete (usually 1-2 seconds)
+    while (imuSensor.isCalibrating()) {
+        wait(10, msec);
+    }
+    
+    // Optional: Reset heading to 0 degrees
+    imuSensor.resetHeading();
+    
+    // Print calibration status to brain screen
+    Brain.Screen.print("IMU Calibrated!");
+}</code></pre>
+
+              <blockquote>
+                <p><strong>Important:</strong> Always check if the IMU is still calibrating before using it. Never use IMU values during calibration as they will be inaccurate.</p>
+              </blockquote>
+
+              <h3>IMU Methods and Usage</h3>
+              <p>The IMU provides several useful methods for robot control:</p>
+
+              <h4>Heading (Yaw) - Most Common</h4>
+              <pre><code class="language-cpp">// Get current heading in degrees (0-360)
+double currentHeading = imuSensor.heading();
+
+// Reset heading to 0 degrees
+imuSensor.resetHeading();
+
+// Check if still calibrating
+bool isCalibrating = imuSensor.isCalibrating();</code></pre>
+
+              <h4>Roll and Pitch</h4>
+              <pre><code class="language-cpp">// Get roll angle (left/right tilt)
+double rollAngle = imuSensor.roll();
+
+// Get pitch angle (forward/backward tilt)
+double pitchAngle = imuSensor.pitch();</code></pre>
+
+              <h4>Rotation (Total Degrees Turned)</h4>
+              <pre><code class="language-cpp">// Get total rotation since last reset
+double totalRotation = imuSensor.rotation();
+
+// Reset rotation counter
+imuSensor.resetRotation();</code></pre>
+
+              <h3>Practical IMU Applications</h3>
+
+              <h4>1. Precise Turning</h4>
+              <pre><code class="language-cpp">void turnToAngle(double targetAngle) {
+    double currentAngle = imuSensor.heading();
+    double error = targetAngle - currentAngle;
+    
+    // Normalize error to -180 to 180 range
+    while (error > 180) error -= 360;
+    while (error < -180) error += 360;
+    
+    // Turn until within 2 degrees of target
+    while (fabs(error) > 2) {
+        // Calculate turn speed based on error
+        double turnSpeed = error * 0.5;  // Proportional control
+        if (turnSpeed > 50) turnSpeed = 50;
+        if (turnSpeed < -50) turnSpeed = -50;
+        
+        // Apply turn
+        leftFront.spin(forward, turnSpeed, percent);
+        leftBack.spin(forward, turnSpeed, percent);
+        rightFront.spin(reverse, turnSpeed, percent);
+        rightBack.spin(reverse, turnSpeed, percent);
+        
+        // Update error
+        currentAngle = imuSensor.heading();
+        error = targetAngle - currentAngle;
+        while (error > 180) error -= 360;
+        while (error < -180) error += 360;
+        
+        wait(10, msec);
+    }
+    
+    // Stop motors
+    leftFront.stop();
+    leftBack.stop();
+    rightFront.stop();
+    rightBack.stop();
+}</code></pre>
+
+              <h4>2. Straight Line Driving</h4>
+              <pre><code class="language-cpp">void driveStraight(double distance, double speed) {
+    // Reset encoders and IMU
+    leftEncoder.resetPosition();
+    rightEncoder.resetPosition();
+    imuSensor.resetHeading();
+    
+    double targetDistance = distance * 360;  // Convert inches to degrees
+    double currentDistance = 0;
+    
+    while (currentDistance < targetDistance) {
+        // Get current heading for correction
+        double currentHeading = imuSensor.heading();
+        
+        // Calculate correction (proportional control)
+        double correction = currentHeading * 0.1;  // Adjust multiplier as needed
+        
+        // Apply correction to each side
+        double leftSpeed = speed - correction;
+        double rightSpeed = speed + correction;
+        
+        // Limit speeds
+        if (leftSpeed > 100) leftSpeed = 100;
+        if (leftSpeed < -100) leftSpeed = -100;
+        if (rightSpeed > 100) rightSpeed = 100;
+        if (rightSpeed < -100) rightSpeed = -100;
+        
+        // Drive motors
+        leftFront.spin(forward, leftSpeed, percent);
+        leftBack.spin(forward, leftSpeed, percent);
+        rightFront.spin(forward, rightSpeed, percent);
+        rightBack.spin(forward, rightSpeed, percent);
+        
+        // Update distance
+        currentDistance = (leftEncoder.position(degrees) + rightEncoder.position(degrees)) / 2;
+        
+        wait(10, msec);
+    }
+    
+    // Stop motors
+    leftFront.stop();
+    leftBack.stop();
+    rightFront.stop();
+    rightBack.stop();
+}</code></pre>
+
+              <h2 id="functions-in-vexcode">Functions in VEXcode</h2>
+
+              <p>Functions are essential for organizing your code and making it reusable. They help break down complex tasks into manageable pieces and make your code easier to debug and maintain.</p>
+
+              <h3>Why Functions Are Helpful</h3>
+              <ul>
+                <li><strong>Code Reusability</strong>: Write once, use many times</li>
+                <li><strong>Organization</strong>: Break complex tasks into logical pieces</li>
+                <li><strong>Debugging</strong>: Easier to test individual components</li>
+                <li><strong>Readability</strong>: Make your main code cleaner and easier to understand</li>
+                <li><strong>Teamwork</strong>: Different team members can work on different functions</li>
+              </ul>
+
+              <h3>Function Syntax in C++</h3>
+              <pre><code class="language-cpp">// Function declaration
+returnType functionName(parameter1, parameter2, ...) {
+    // Function body
+    // Do something with parameters
+    return value;  // Optional, only if returnType is not void
+}</code></pre>
+
+              <h3>Common Function Examples</h3>
+
+              <h4>1. Drive Control Functions</h4>
+              <pre><code class="language-cpp">// Tank drive function
+void tankDrive(int leftSpeed, int rightSpeed) {
+    leftFront.spin(forward, leftSpeed, percent);
+    leftBack.spin(forward, leftSpeed, percent);
+    rightFront.spin(forward, rightSpeed, percent);
+    rightBack.spin(forward, rightSpeed, percent);
+}
+
+// Arcade drive function
+void arcadeDrive(int forwardSpeed, int turnSpeed) {
+    int leftSpeed = forwardSpeed + turnSpeed;
+    int rightSpeed = forwardSpeed - turnSpeed;
+    
+    // Limit speeds to valid range
+    if (leftSpeed > 100) leftSpeed = 100;
+    if (leftSpeed < -100) leftSpeed = -100;
+    if (rightSpeed > 100) rightSpeed = 100;
+    if (rightSpeed < -100) rightSpeed = -100;
+    
+    tankDrive(leftSpeed, rightSpeed);
+}</code></pre>
+
+              <h4>2. Intake Control Functions</h4>
+              <pre><code class="language-cpp">// Intake control with speed parameter
+void intakeControl(int speed) {
+    if (speed > 0) {
+        intakeMotor.spin(forward, speed, percent);
+    } else if (speed < 0) {
+        intakeMotor.spin(reverse, -speed, percent);
+    } else {
+        intakeMotor.stop();
+    }
+}
+
+// Intake with automatic speed
+void intakeIn() {
+    intakeControl(80);  // 80% forward speed
+}
+
+void intakeOut() {
+    intakeControl(-60); // 60% reverse speed
+}
+
+void intakeStop() {
+    intakeControl(0);   // Stop
+}</code></pre>
+
+              <h4>3. Lift Control Functions</h4>
+              <pre><code class="language-cpp">// Lift to specific height
+void liftToHeight(double targetHeight) {
+    double currentHeight = liftMotor.position(degrees);
+    double error = targetHeight - currentHeight;
+    
+    // Lift until within 5 degrees of target
+    while (fabs(error) > 5) {
+        double liftSpeed = error * 0.3;  // Proportional control
+        if (liftSpeed > 50) liftSpeed = 50;
+        if (liftSpeed < -50) liftSpeed = -50;
+        
+        liftMotor.spin(forward, liftSpeed, percent);
+        
+        currentHeight = liftMotor.position(degrees);
+        error = targetHeight - currentHeight;
+        wait(10, msec);
+    }
+    
+    liftMotor.stop();
+}
+
+// Preset lift positions
+void liftToLow() {
+    liftToHeight(0);      // Ground level
+}
+
+void liftToMedium() {
+    liftToHeight(180);    // Medium height
+}
+
+void liftToHigh() {
+    liftToHeight(360);    // High position
+}</code></pre>
+
+              <h4>4. Sensor Reading Functions</h4>
+              <pre><code class="language-cpp">// Get average encoder distance
+double getAverageDistance() {
+    double leftDistance = leftEncoder.position(degrees);
+    double rightDistance = rightEncoder.position(degrees);
+    return (leftDistance + rightDistance) / 2;
+}
+
+// Check if object is detected
+bool isObjectDetected() {
+    return distanceSensor.objectDistance(inches) < 12;  // Within 12 inches
+}
+
+// Get robot heading with error checking
+double getRobotHeading() {
+    if (imuSensor.isCalibrating()) {
+        return 0;  // Return 0 if still calibrating
+    }
+    return imuSensor.heading();
+}</code></pre>
+
+              <h3>Using Functions in Your Main Code</h3>
+              <p>Here's how you might use these functions in your autonomous and user control:</p>
+
+              <pre><code class="language-cpp">void autonomous() {
+    // Drive forward 24 inches
+    driveStraight(24, 50);
+    
+    // Turn 90 degrees right
+    turnToAngle(90);
+    
+    // Intake a ball
+    intakeIn();
+    wait(1, seconds);
+    intakeStop();
+    
+    // Lift to medium height
+    liftToMedium();
+    
+    // Drive back
+    driveStraight(-24, 50);
+}
+
+void usercontrol() {
+    while (true) {
+        // Tank drive using function
+        int leftSpeed = Controller1.Axis3.position();
+        int rightSpeed = Controller1.Axis2.position();
+        tankDrive(leftSpeed, rightSpeed);
+        
+        // Intake control using functions
+        if (Controller1.ButtonL1.pressing()) {
+            intakeIn();
+        } else if (Controller1.ButtonL2.pressing()) {
+            intakeOut();
+        } else {
+            intakeStop();
+        }
+        
+        // Lift control using functions
+        if (Controller1.ButtonR1.pressing()) {
+            liftToHigh();
+        } else if (Controller1.ButtonR2.pressing()) {
+            liftToLow();
+        }
+        
+        wait(20, msec);
+    }
+}</code></pre>
+
+              <h3>Function Best Practices</h3>
+              <ul>
+                <li><strong>Descriptive Names</strong>: Use clear, descriptive function names</li>
+                <li><strong>Single Purpose</strong>: Each function should do one thing well</li>
+                <li><strong>Parameters</strong>: Use parameters to make functions flexible</li>
+                <li><strong>Comments</strong>: Document what each function does</li>
+                <li><strong>Error Checking</strong>: Include safety checks in your functions</li>
+                <li><strong>Consistent Style</strong>: Follow the same naming and formatting conventions</li>
+              </ul>
+
               <h2 id="main-program-structure">Main Program Structure</h2>
 
               <p>Your main program in <code>main.cpp</code> follows this structure:</p>
 
-              <pre><code>// main.cpp
+              <pre><code class="language-cpp">// main.cpp
 #include "vex.h"
 #include "robot-config.h"
 
@@ -372,7 +727,7 @@ int main() {
         <div class="footer-col footer-col-1">
           <ul class="contact-list">
             <li class="p-name">Harvard-Westlake VEX Robotics</li>
-            <li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li>
+            <li><a class="u-email" href="mailto:hakopzarikyan@gmail.com">hakopzarikyan@gmail.com</a></li>
           </ul>
         </div>
 
@@ -463,6 +818,8 @@ int main() {
         <li><a href="#competition-program-structure">Competition Program Structure</a></li>
         <li><a href="#setting-up-vexcode-in-vs-code">Setting Up VexCode in VS Code</a></li>
         <li><a href="#code-based-hardware-configuration">Code-Based Hardware Configuration</a></li>
+        <li><a href="#imu-sensor-setup-and-usage">IMU Sensor Setup and Usage</a></li>
+        <li><a href="#functions-in-vexcode">Functions in VEXcode</a></li>
         <li><a href="#main-program-structure">Main Program Structure</a></li>
         <li><a href="#building-and-uploading-your-code">Building and Uploading Your Code</a></li>
         <li><a href="#next-steps">Next Steps</a></li>
@@ -471,6 +828,54 @@ int main() {
     
     return navMaps[pageTitle] || '<li><a href="#top">Page Navigation</a></li>';
   }
+  </script>
+  
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    // Apply theme-specific syntax highlighting
+    function applySyntaxHighlighting() {
+      const theme = localStorage.getItem('hw-vexcode-theme') || 
+                   (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      
+      // Remove existing theme classes
+      document.querySelectorAll('link[href*="prism"]').forEach(link => {
+        if (link.href.includes('prism-tomorrow') || link.href.includes('prism.min')) {
+          link.disabled = true;
+        }
+      });
+      
+      // Apply appropriate theme
+      if (theme === 'dark') {
+        document.querySelector('link[href*="prism-tomorrow"]').disabled = false;
+      } else {
+        document.querySelector('link[href*="prism.min"]').disabled = false;
+      }
+      
+      // Re-highlight code blocks
+      if (window.Prism) {
+        Prism.highlightAll();
+      }
+    }
+    
+    // Apply highlighting on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add custom VEX type highlighting
+      if (window.Prism) {
+        // Add VEX-specific keywords to C++ language
+        Prism.languages.cpp.keyword = /\b(?:alignas|alignof|asm|auto|bool|break|case|catch|char|char8_t|char16_t|char32_t|class|concept|const|consteval|constexpr|constinit|const_cast|continue|co_await|co_return|co_yield|decltype|default|delete|do|double|dynamic_cast|else|enum|explicit|export|extern|false|float|for|friend|goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|public|register|reinterpret_cast|requires|return|short|signed|sizeof|static|static_assert|static_cast|struct|switch|template|this|thread_local|throw|true|try|typedef|typeid|typename|union|unsigned|using|virtual|void|volatile|wchar_t|while|motor|inertial|encoder|gyro|distance|optical|controller|brain|competition)\b/;
+      }
+      
+      applySyntaxHighlighting();
+    });
+    
+    // Listen for theme changes
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'hw-vexcode-theme') {
+        applySyntaxHighlighting();
+      }
+    });
   </script>
 </body>
 </html>

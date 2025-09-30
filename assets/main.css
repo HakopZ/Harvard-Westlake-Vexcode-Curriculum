@@ -54,8 +54,8 @@
   --sidebar-title-color: #8b949e;
   --summary-color: #c9d1d9;
   --h2-border-color: #30363d;
-  --code-bg: #161b22;
-  --code-text: #c9d1d9;
+  --code-bg: #09090a;
+  --code-text: #ffffff;
   --table-header-bg: #21262d;
   --table-border: #30363d;
   --link-color: #ff6b6b;
@@ -248,9 +248,9 @@ pre, code {
   background-color: var(--code-bg) !important;
   color: var(--code-text) !important;
   border: 1px solid var(--border-color);
-  border-radius: 6px;
-  padding: 0.2em 0.4em;
-  font-size: 0.9em;
+  border-radius: 1px;
+  padding: 0.1em 0.3em;
+  font-size: 0.7em;
 }
 
 pre {
@@ -672,4 +672,34 @@ details[open] {
   .site-header {
     border-bottom: 2px solid #000;
   }
+}
+
+/* Kill white glow on operators/punctuation in code */
+[data-theme="dark"] code,
+[data-theme="dark"] pre,
+[data-theme="dark"] pre code,
+[data-theme="dark"] .token.operator,
+[data-theme="dark"] .token.punctuation,
+[data-theme="dark"] .hljs-operator,
+[data-theme="dark"] .hljs-punctuation {
+  text-shadow: none !important;
+  background: none !important;
+  color: var(--code-text) !important; /* use your dark mode var */
+}
+
+/* If you're using Prism or Highlight.js, nuke their token shadows too */
+[data-theme="dark"] pre[class*="language-"],
+[data-theme="dark"] :not(pre) > code[class*="language-"],
+[data-theme="dark"] .token.tag,
+[data-theme="dark"] .token.entity,
+[data-theme="dark"] .hljs,
+[data-theme="dark"] .hljs-tag {
+  text-shadow: none !important;
+  color: var(--code-text) !important; /* keep colors consistent */
+}
+
+/* Slightly bump weight for readability without glow */
+[data-theme="dark"] code, 
+[data-theme="dark"] pre code {
+  font-weight: 500; /* adjust to taste */
 }

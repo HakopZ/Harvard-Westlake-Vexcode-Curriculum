@@ -8,6 +8,10 @@
   <meta name="description" content="Master C++ programming fundamentals for robotics. Learn essential programming concepts, data structures, and object-oriented design principles.">
   <link rel="stylesheet" href="assets/main.css">
   
+  <!-- Prism.js for syntax highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  
   <!-- Theme toggle script -->
   <script src="assets/theme-toggle.js" defer></script>
   
@@ -219,7 +223,7 @@
                   Assignment: Write a function <code>toSeconds(int minutes)</code> that returns minutes * 60.
                 </button>
                 <div class="example-content">
-                  <pre><code>int toSeconds(int minutes) {
+                  <pre><code class="language-cpp">int toSeconds(int minutes) {
     return minutes * 60;
 }</code></pre>
                 </div>
@@ -239,7 +243,7 @@
                   Assignment: Write a <code>for</code> loop that prints 1 to 5 (inclusive).
                 </button>
                 <div class="example-content">
-                  <pre><code>for (int i = 1; i <= 5; ++i) {
+                  <pre><code class="language-cpp">for (int i = 1; i &lt;= 5; ++i) {
     std::cout << i << "\n";
 }</code></pre>
                 </div>
@@ -257,7 +261,7 @@
                   Assignment: Add a number to a vector and print the new size.
                 </button>
                 <div class="example-content">
-                  <pre><code>#include <vector>
+                  <pre><code class="language-cpp">#include <vector>
 #include <iostream>
 
 int main() {
@@ -281,7 +285,7 @@ int main() {
                   Assignment: Write a function that appends "!" to a <code>std::string</code> by reference.
                 </button>
                 <div class="example-content">
-                  <pre><code>void addBang(std::string &s) {
+                  <pre><code class="language-cpp">void addBang(std::string &s) {
     s += "!";
 }</code></pre>
                 </div>
@@ -296,7 +300,7 @@ int main() {
                   Assignment: Create a <code>struct</code> <code>Book</code> with <code>title</code> and <code>pages</code> fields.
                 </button>
                 <div class="example-content">
-                  <pre><code>struct Book {
+                  <pre><code class="language-cpp">struct Book {
     std::string title;
     int pages;
 };</code></pre>
@@ -317,7 +321,7 @@ int main() {
                   Assignment: Mark a class field <code>private</code> and add a <code>public</code> getter.
                 </button>
                 <div class="example-content">
-                  <pre><code>class User {
+                  <pre><code class="language-cpp">class User {
 private:
     int age;
 public:
@@ -379,7 +383,7 @@ public:
                 </button>
                 <div class="example-content">
                   <p><strong>Example pseudocode:</strong></p>
-                  <pre><code>start
+                  <pre><code class="language-cpp">start
 ask for two numbers
 add them
 print the sum
@@ -403,7 +407,7 @@ stop</code></pre>
                   Assignment: Add a print statement to show a variable before and after a change.
                 </button>
                 <div class="example-content">
-                  <pre><code>std::cout << "before: " << x << "\n";
+                  <pre><code class="language-cpp">std::cout << "before: " << x << "\n";
 // ... update x ...
 std::cout << "after: " << x << "\n";</code></pre>
                 </div>
@@ -442,9 +446,9 @@ std::cout << "after: " << x << "\n";</code></pre>
                 </button>
                 <div class="example-content">
                   <p><strong>Comment example:</strong></p>
-                  <pre><code>const double tax = 0.095; // LA county sales tax</code></pre>
+                  <pre><code class="language-cpp">const double tax = 0.095; // LA county sales tax</code></pre>
                   <p><strong>Assignment solution:</strong></p>
-                  <pre><code>// Before: unclear variable names
+                  <pre><code class="language-cpp">// Before: unclear variable names
 int x = 5;
 const double tax = 0.095;
 
@@ -483,7 +487,7 @@ const double tax = 0.095; // LA county sales tax rate</code></pre>
                 </button>
                 <div class="example-content">
                   <p><strong>Simple commands to remember:</strong></p>
-                  <pre><code>git status
+                  <pre><code class="language-cpp">git status
 git add .
 git commit -m "explain the change"
 git push</code></pre>
@@ -505,7 +509,7 @@ git push</code></pre>
                 <li>Index starts at 0, not 1</li>
               </ul>
 
-              <pre><code>// Array declaration and initialization
+              <pre><code class="language-cpp">// Array declaration and initialization
 int scores[5] = {85, 92, 78, 96, 88};  // Array of 5 integers
 
 // Accessing array elements
@@ -530,7 +534,7 @@ scores[1] = 95;  // Change second score to 95
                 <li>More convenient to use</li>
               </ul>
 
-              <pre><code>#include <vector>
+              <pre><code class="language-cpp">#include <vector>
 
 // Vector declaration and initialization
 std::vector<int> scores = {85, 92, 78};  // Start with 3 elements
@@ -598,7 +602,7 @@ bool isEmpty = scores.empty();   // Check if vector is empty</code></pre>
         <div class="footer-col footer-col-1">
           <ul class="contact-list">
             <li class="p-name">Harvard-Westlake VEX Robotics</li>
-            <li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li>
+            <li><a class="u-email" href="mailto:hakopzarikyan@gmail.com">hakopzarikyan@gmail.com</a></li>
           </ul>
         </div>
 
@@ -709,6 +713,54 @@ bool isEmpty = scores.empty();   // Check if vector is empty</code></pre>
     
     return navMaps[pageTitle] || '<li><a href="#top">Page Navigation</a></li>';
   }
+  </script>
+  
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    // Apply theme-specific syntax highlighting
+    function applySyntaxHighlighting() {
+      const theme = localStorage.getItem('hw-vexcode-theme') || 
+                   (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      
+      // Remove existing theme classes
+      document.querySelectorAll('link[href*="prism"]').forEach(link => {
+        if (link.href.includes('prism-tomorrow') || link.href.includes('prism.min')) {
+          link.disabled = true;
+        }
+      });
+      
+      // Apply appropriate theme
+      if (theme === 'dark') {
+        document.querySelector('link[href*="prism-tomorrow"]').disabled = false;
+      } else {
+        document.querySelector('link[href*="prism.min"]').disabled = false;
+      }
+      
+      // Re-highlight code blocks
+      if (window.Prism) {
+        Prism.highlightAll();
+      }
+    }
+    
+    // Apply highlighting on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add custom VEX type highlighting
+      if (window.Prism) {
+        // Add VEX-specific keywords to C++ language
+        Prism.languages.cpp.keyword = /\b(?:alignas|alignof|asm|auto|bool|break|case|catch|char|char8_t|char16_t|char32_t|class|concept|const|consteval|constexpr|constinit|const_cast|continue|co_await|co_return|co_yield|decltype|default|delete|do|double|dynamic_cast|else|enum|explicit|export|extern|false|float|for|friend|goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|public|register|reinterpret_cast|requires|return|short|signed|sizeof|static|static_assert|static_cast|struct|switch|template|this|thread_local|throw|true|try|typedef|typeid|typename|union|unsigned|using|virtual|void|volatile|wchar_t|while|motor|inertial|encoder|gyro|distance|optical|controller|brain|competition)\b/;
+      }
+      
+      applySyntaxHighlighting();
+    });
+    
+    // Listen for theme changes
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'hw-vexcode-theme') {
+        applySyntaxHighlighting();
+      }
+    });
   </script>
 </body>
 </html>
