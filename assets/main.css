@@ -1,53 +1,44 @@
-// Import minima theme - using @import for now as @use may not work with Jekyll themes
+/* Import minima theme - using @import for now as @use may not work with Jekyll themes */
 @import "minima";
 
-$hw-red: #c8102e;
-$hw-black: #000000;
-$hw-gray-50: #fafafa;
-$hw-gray-100: #f5f7fa;
-$hw-gray-200: #eef2f7;
-$hw-gray-300: #e5e7eb;
-$hw-gray-700: #374151;
-
-// CSS Custom Properties for Theme Support
 :root {
-  // Light theme (default)
+  /* Light theme (default) */
   --bg-color: #ffffff;
   --text-color: #111111;
   --text-muted: #666666;
-  --border-color: #{$hw-gray-300};
-  --sidebar-border-color: #{$hw-gray-300};
-  --nav-hover-bg: #{$hw-gray-100};
-  --details-bg: #{$hw-gray-50};
+  --border-color: #e5e7eb;
+  --sidebar-border-color: #e5e7eb;
+  --nav-hover-bg: #f5f7fa;
+  --details-bg: #fafafa;
   --site-title-color: #c8102e;
-  --sidebar-title-color: #{$hw-gray-700};
-  --summary-color: #{$hw-black};
-  --h2-border-color: #{$hw-gray-300};
+  --sidebar-title-color: #374151;
+  --summary-color: #000000;
+  --h2-border-color: #e5e7eb;
   --code-bg: #f8f9fa;
   --code-text: #333333;
-  --table-header-bg: #{$hw-gray-50};
-  --table-border: #{$hw-gray-300};
-  --link-color: #{$hw-red};
+  --table-header-bg: #fafafa;
+  --table-border: #e5e7eb;
+  --link-color: #c8102e;
   --link-hover-color: #b00e2a;
-  --button-bg: #{$hw-red};
+  --button-bg: #c8102e;
   --button-text: #ffffff;
   --button-hover-bg: #b00e2a;
   --input-bg: #ffffff;
-  --input-border: #{$hw-gray-300};
+  --input-border: #e5e7eb;
   --input-text: #111111;
   --shadow: rgba(0, 0, 0, 0.1);
   --shadow-hover: rgba(0, 0, 0, 0.15);
   --card-bg: #ffffff;
-  --card-border: #{$hw-gray-300};
+  --card-border: #e5e7eb;
   --menu-bg: #ffffff;
-  --menu-border: #{$hw-gray-300};
-  --footer-bg: #{$hw-gray-50};
-  --footer-text: #{$hw-gray-700};
-  --footer-border: #{$hw-gray-300};
+  --menu-border: #e5e7eb;
+  --footer-bg: #fafafa;
+  --footer-text: #374151;
+  --footer-border: #e5e7eb;
 }
 
 [data-theme="dark"] {
-  // Dark theme
+  /* Dark theme */
   --bg-color: #1a1a1a;
   --text-color: #e5e5e5;
   --text-muted: #a0a0a0;
@@ -65,7 +56,7 @@ $hw-gray-700: #374151;
   --table-border: #404040;
   --link-color: #ff6b6b;
   --link-hover-color: #ff5252;
-  --button-bg: #{$hw-red};
+  --button-bg: #c8102e;
   --button-text: #ffffff;
   --button-hover-bg: #e01a3a;
   --input-bg: #2a2a2a;
@@ -82,27 +73,15 @@ $hw-gray-700: #374151;
   --footer-border: #404040;
 }
 
-// Minima variables overrides
-$brand-color: $hw-red;
-$link-base-color: $hw-red;
-$text-color: #111111; // Fallback for Sass functions
-$background-color: #ffffff; // Fallback for Sass functions
-$border-color: $hw-gray-300; // Fallback for Sass functions
-$site-title-color: #c8102e; // Fallback for Sass functions
-
-// Additional color variables for better compatibility
-$hw-red-hover: #b00e2a;
-$hw-red-light: #e01a3a;
-
-// Override Minima's hardcoded colors with CSS variables
+/* Override Minima's hardcoded colors with CSS variables */
 html, body {
   height: 100%;
 }
 
 body {
-  background-color: #ffffff; // Fallback for older browsers
+  background-color: #ffffff; /* Fallback for older browsers */
   background-color: var(--bg-color);
-  color: #111111; // Fallback for older browsers
+  color: #111111; /* Fallback for older browsers */
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
   margin: 0;
@@ -111,7 +90,7 @@ body {
   max-width: 100%;
 }
 
-// Ensure all containers respect viewport width
+/* Ensure all containers respect viewport width */
 .wrapper {
   max-width: 100%;
   overflow: visible; /* Allow sticky to work properly */
@@ -123,7 +102,7 @@ body {
   word-wrap: break-word;
 }
 
-// Theme transition class for smooth animations
+/* Theme transition class for smooth animations */
 .theme-transition * {
   transition: background-color 0.3s ease, 
               color 0.3s ease, 
@@ -132,11 +111,11 @@ body {
 }
 
 .site-header {
-  background-color: #ffffff; // Fallback
+  background-color: #ffffff; /* Fallback */
   background-color: var(--bg-color);
-  border-bottom: 1px solid #e5e7eb; // Fallback
+  border-bottom: 1px solid #e5e7eb; /* Fallback */
   border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Fallback
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Fallback */
   box-shadow: 0 2px 4px var(--shadow);
   width: 100%;
 }
@@ -153,7 +132,7 @@ body {
   color: var(--footer-text);
 }
 
-// Dark Mode Toggle Button
+/* Dark Mode Toggle Button */
 .theme-toggle {
   position: fixed;
   bottom: 1rem;
@@ -172,29 +151,29 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  
-  &:hover {
-    background: var(--button-hover-bg);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px var(--shadow-hover);
-    border-color: var(--button-hover-bg);
-  }
-  
-  &:focus {
-    outline: 2px solid var(--link-color);
-    outline-offset: 2px;
-  }
-  
-  .theme-icon {
-    font-size: 1.1rem;
-  }
-  
-  .theme-text {
-    font-size: 0.85rem;
-  }
 }
 
-// Subtle modernization with CSS variables
+.theme-toggle:hover {
+  background: var(--button-hover-bg);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--shadow-hover);
+  border-color: var(--button-hover-bg);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--link-color);
+  outline-offset: 2px;
+}
+
+.theme-toggle .theme-icon {
+  font-size: 1.1rem;
+}
+
+.theme-toggle .theme-text {
+  font-size: 0.85rem;
+}
+
+/* Subtle modernization with CSS variables */
 .site-title { 
   color: #c8102e !important; /* Harvard-Westlake red - force override */
   font-weight: 900 !important; 
@@ -202,19 +181,19 @@ body {
   font-size: 1.8rem !important;
   text-shadow: 0 3px 6px rgba(200, 16, 46, 0.3);
   text-decoration: none !important;
-  
-  &:hover {
-    color: #c8102e !important; /* Same red on hover */
-    text-decoration: none !important;
-  }
-  
-  &:visited {
-    color: #c8102e !important;
-    text-decoration: none !important;
-  }
 }
 
-// Force override Minima's default colors for better compatibility
+.site-title:hover {
+  color: #c8102e !important; /* Same red on hover */
+  text-decoration: none !important;
+}
+
+.site-title:visited {
+  color: #c8102e !important;
+  text-decoration: none !important;
+}
+
+/* Force override Minima's default colors for better compatibility */
 .site-header {
   background-color: #ffffff !important;
   border-bottom: 1px solid #e5e7eb !important;
@@ -222,34 +201,34 @@ body {
 
 .site-nav .page-link {
   color: #111111 !important;
-  
-  &:hover {
-    color: #111111 !important;
-  }
 }
 
-// Ensure links use the correct colors
+.site-nav .page-link:hover {
+  color: #111111 !important;
+}
+
+/* Ensure links use the correct colors */
 .page-content a {
   color: #c8102e !important;
-  
-  &:hover {
-    color: #b00e2a !important;
-  }
-  
-  &:visited {
-    color: #c8102e !important;
-  }
+}
+
+.page-content a:hover {
+  color: #b00e2a !important;
+}
+
+.page-content a:visited {
+  color: #c8102e !important;
 }
 
 .site-nav .page-link { 
   padding: 0.3rem 0.6rem; 
   border-radius: 6px; 
   color: #111111 !important;
-  
-  &:hover { 
-    background: #f5f7fa; 
-    color: #111111 !important;
-  }
+}
+
+.site-nav .page-link:hover { 
+  background: #f5f7fa; 
+  color: #111111 !important;
 }
 
 a { 
@@ -275,12 +254,12 @@ a:visited {
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  
-  &:hover {
-    background: var(--button-hover-bg);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px var(--shadow);
-  }
+}
+
+.btn:hover, .button:hover, .page-content a.button-link:hover {
+  background: var(--button-hover-bg);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px var(--shadow);
 }
 
 .page-content { 
@@ -303,7 +282,7 @@ a:visited {
   margin-top: 2rem; 
 }
 
-// Code blocks
+/* Code blocks */
 pre, code {
   background-color: var(--code-bg) !important;
   color: var(--code-text) !important;
@@ -314,49 +293,49 @@ pre, code {
   white-space: pre-wrap;
 }
 
-// Ensure code blocks don't cause horizontal scroll
+/* Ensure code blocks don't cause horizontal scroll */
 pre {
   max-width: 100%;
   overflow-x: auto;
   white-space: pre;
 }
 
-// Inline code should wrap
+/* Inline code should wrap */
 code:not(pre code) {
   white-space: normal;
   word-break: break-word;
 }
 
-// Tables
+/* Tables */
 table {
   background-color: var(--card-bg);
   border: 1px solid var(--table-border);
-  
-  th {
-    background-color: var(--table-header-bg);
-    color: var(--text-color);
-    border-bottom: 1px solid var(--table-border);
-  }
-  
-  td {
-    border-bottom: 1px solid var(--table-border);
-    color: var(--text-color);
-  }
 }
 
-// Form elements
+table th {
+  background-color: var(--table-header-bg);
+  color: var(--text-color);
+  border-bottom: 1px solid var(--table-border);
+}
+
+table td {
+  border-bottom: 1px solid var(--table-border);
+  color: var(--text-color);
+}
+
+/* Form elements */
 input, textarea, select {
   background-color: var(--input-bg);
   color: var(--input-text);
   border: 1px solid var(--input-border);
-  
-  &:focus {
-    outline: 2px solid var(--link-color);
-    outline-offset: 2px;
-  }
 }
 
-// Sidebar layout
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid var(--link-color);
+  outline-offset: 2px;
+}
+
+/* Sidebar layout */
 .layout--sidebar { 
   display: grid; 
   grid-template-columns: 250px 1fr; 
@@ -432,7 +411,7 @@ input, textarea, select {
   margin-left: 0;
 }
 
-// Collapsible sections
+/* Collapsible sections */
 details { 
   border: 1px solid var(--border-color); 
   border-radius: 8px; 
@@ -458,60 +437,60 @@ details[open] {
   box-shadow: 0 2px 8px var(--shadow);
 }
 
-// Collapsible example answers
+/* Collapsible example answers */
 .example-answer {
   margin: 1rem 0;
-  
-  .example-toggle {
-    background: var(--button-bg);
-    color: var(--button-text);
-    border: none;
-    border-radius: 6px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    
-    &:hover {
-      background: var(--button-hover-bg);
-      transform: translateY(-1px);
-    }
-    
-    &:focus {
-      outline: 2px solid var(--link-color);
-      outline-offset: 2px;
-    }
-    
-    .toggle-icon {
-      transition: transform 0.3s ease;
-    }
-    
-    &.expanded .toggle-icon {
-      transform: rotate(90deg);
-    }
-  }
-  
-  .example-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    background: var(--details-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    margin-top: 0.5rem;
-    
-    &.expanded {
-      max-height: 1000px;
-      padding: 1rem;
-    }
-  }
 }
 
-// Mobile responsiveness
+.example-answer .example-toggle {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.example-answer .example-toggle:hover {
+  background: var(--button-hover-bg);
+  transform: translateY(-1px);
+}
+
+.example-answer .example-toggle:focus {
+  outline: 2px solid var(--link-color);
+  outline-offset: 2px;
+}
+
+.example-answer .example-toggle .toggle-icon {
+  transition: transform 0.3s ease;
+}
+
+.example-answer .example-toggle.expanded .toggle-icon {
+  transform: rotate(90deg);
+}
+
+.example-answer .example-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: var(--details-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
+
+.example-answer .example-content.expanded {
+  max-height: 1000px;
+  padding: 1rem;
+}
+
+/* Mobile responsiveness */
 @media (max-width: 768px) {
   .layout--sidebar {
     grid-template-columns: 1fr;
@@ -528,9 +507,9 @@ details[open] {
     right: 0.5rem;
     padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
-    
-    .theme-text {
-      display: none;
-    }
   }
-} 
+  
+  .theme-toggle .theme-text {
+    display: none;
+  }
+}
